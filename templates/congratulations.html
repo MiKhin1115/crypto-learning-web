@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mission-panel" style="text-align: center; border-color: var(--text-color);">
+    <h1 style="font-size: 3rem; color: var(--text-color); margin-bottom: 10px;">MISSION ACCOMPLISHED</h1>
+    <h2 style="color: var(--warning-color);">SYSTEM FULLY COMPROMISED</h2>
+    
+    <div style="margin: 40px 0;">
+        <span style="font-size: 5rem;">🏆</span>
+    </div>
+
+    <p style="font-size: 1.2rem; margin-bottom: 30px;">
+        Congratulations, Agent. You have successfully bypassed all security layers and gained root access.
+    </p>
+
+    <div class="briefing" style="text-align: left; max-width: 700px; margin: 0 auto;">
+        <h3><span class="blink">></span> MISSION DEBRIEF // SKILLS ACQUIRED</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
+                <strong style="color: var(--warning-color);">LEVEL 1: CAESAR CIPHER</strong><br>
+                Learned how basic substitution ciphers work and how they are easily broken by frequency analysis or brute force shifting.
+            </li>
+            <li style="margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
+                <strong style="color: var(--warning-color);">LEVEL 2: STEGANOGRAPHY</strong><br>
+                Discovered how information can be hidden within other non-secret data (like images) to avoid detection.
+            </li>
+            <li style="margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
+                <strong style="color: var(--warning-color);">LEVEL 3: RSA ENCRYPTION</strong><br>
+                Understood the mathematical relationship between Public and Private keys using Prime numbers (p, q) and exponents (e, d).
+            </li>
+            <li style="margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
+                <strong style="color: var(--warning-color);">LEVEL 4: HASHING</strong><br>
+                Learned that hashes are one-way functions used for integrity, and that simple passwords can be cracked using rainbow tables or dictionary attacks.
+            </li>
+            <li style="margin-bottom: 15px;">
+                <strong style="color: var(--warning-color);">LEVEL 5: DIGITAL SIGNATURES</strong><br>
+                Verified how Chain of Trust works to ensure authenticity and non-repudiation in digital communications.
+            </li>
+        </ul>
+    </div>
+
+    <div style="margin-top: 40px;">
+        <a href="{{ url_for('reset') }}" class="hint-btn" style="text-decoration: none; font-size: 1.2rem; padding: 15px 30px;">INITIATE NEW OPERATION</a>
+    </div>
+</div>
+
+<script>
+    // Celebration Audio
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            SoundFX.playAccessGranted();
+            // Fire some confetti if we had a library, but let's do a sound sequence
+            let i = 0;
+            const celebrate = setInterval(() => {
+                SoundFX.playTone(400 + (i*100), 'sine', 0.1);
+                i++;
+                if (i > 5) clearInterval(celebrate);
+            }, 200);
+        }, 500);
+    });
+</script>
+{% endblock %}

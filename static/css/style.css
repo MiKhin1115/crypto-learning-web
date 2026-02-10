@@ -1,0 +1,324 @@
+:root {
+    --bg-color: #0a0a0a;
+    --text-color: #00ff41;
+    --accent-color: #008f11;
+    --error-color: #ff3333;
+    --warning-color: #ffaa00;
+    --panel-bg: #111;
+    --border-color: #333;
+    --font-mono: 'Share Tech Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-mono);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0,0,0,0.2) 50%,
+        rgba(0,0,0,0.2)
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 10px var(--accent-color);
+}
+
+.blink {
+    animation: blinker 1.5s linear infinite;
+}
+
+@keyframes blinker {
+    50% { opacity: 0; }
+}
+
+/* Typewriter Cursor */
+.typing-cursor::after {
+    content: '|';
+    animation: blinker 0.8s infinite;
+}
+
+h1, h2, h3 {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Level Map Styles */
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.level-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: var(--text-color);
+    display: block;
+    position: relative;
+}
+
+.level-card.locked {
+    opacity: 0.5;
+    border-color: #333;
+    cursor: not-allowed;
+    filter: grayscale(100%);
+}
+
+.level-card.unlocked {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+}
+
+.level-card.unlocked:hover {
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    transform: translateY(-2px);
+}
+
+.level-card.completed {
+    border-color: var(--text-color);
+    background: rgba(0, 255, 65, 0.05);
+}
+
+.status-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Level Interface Styles */
+.mission-panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--accent-color);
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+}
+
+.input-area {
+    margin-top: 30px;
+}
+
+input[type="text"], input[type="password"], input[type="number"] {
+    width: 100%;
+    padding: 15px;
+    background: #000;
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+button {
+    background: var(--accent-color);
+    color: #000;
+    border: none;
+    padding: 15px 30px;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.3s;
+    width: 100%;
+}
+
+button:hover {
+    background: var(--text-color);
+    box-shadow: 0 0 15px var(--text-color);
+}
+
+.hints-section {
+    margin-top: 30px;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 20px;
+}
+
+.hint {
+    background: #1a1a1a;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-left: 3px solid var(--warning-color);
+    display: none; /* Hidden by default */
+}
+
+.hint.visible {
+    display: block;
+    animation: fadeIn 0.5s;
+}
+
+.hint-btn {
+    background: transparent;
+    border: 1px solid var(--warning-color);
+    color: var(--warning-color);
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    width: auto;
+    margin-top: 10px;
+}
+
+.hint-btn:hover {
+    background: rgba(255, 170, 0, 0.1);
+    box-shadow: none;
+}
+
+.feedback {
+    margin-top: 15px;
+    font-size: 1.1rem;
+    min-height: 1.5em;
+}
+
+.feedback.error {
+    color: var(--error-color);
+}
+
+.feedback.success {
+    color: var(--text-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Flash Messages */
+.flash-messages {
+    margin-bottom: 20px;
+}
+.flash {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid;
+}
+.flash.error { border-color: var(--error-color); color: var(--error-color); }
+.flash.success { border-color: var(--text-color); color: var(--text-color); }
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    background-color: #333;
+    height: 10px;
+    margin-bottom: 20px;
+}
+.progress-bar {
+    height: 100%;
+    background-color: var(--accent-color);
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+/* Custom UI Elements per level */
+.wheel-container {
+    /* For Caesar */
+    text-align: center;
+    margin: 20px 0;
+}
+.wheel {
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.file-drop-zone {
+    border: 2px dashed var(--accent-color);
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+.file-drop-zone:hover {
+    background: rgba(0, 255, 65, 0.05);
+}
+
+#matrixCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    opacity: 0.15;
+}
+
+.mute-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: #666;
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    width: auto;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.mute-btn:hover {
+    color: var(--text-color);
+    border-color: var(--text-color);
+    box-shadow: none;
+    background: transparent;
+}
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .status-bar {
+        margin-top: 10px;
+        font-size: 0.8rem;
+    }
+}

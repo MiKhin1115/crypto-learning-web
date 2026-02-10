@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mission-brief">
+    <h1><span class="blink">></span> MODULAR CRYPTO LAB</h1>
+    <p>Select a training module to begin. All protocols are unlocked for study.</p>
+</div>
+
+<div class="level-grid">
+    {% for id, module in modules.items() %}
+        <a href="{{ url_for('module', module_id=id) }}" class="level-card unlocked">
+            <span class="status-icon">🔓</span>
+            <h3>Module {{ id }}: {{ module.title }}</h3>
+            <p>{{ module.type|upper }} PROTOCOL</p>
+            <div style="margin-top: 10px; font-size: 0.8rem; color: #888;">
+                [ CLICK TO LAUNCH ]
+            </div>
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}

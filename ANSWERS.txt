@@ -1,0 +1,46 @@
+==========================================
+CYBER ESCAPE ROOM - MASTER ANSWER KEY
+==========================================
+
+[LEVEL 1: CAESAR CIPHER]
+1. Cipher: "WKH SDVVZRUG LV VHFXUHBQRGH"
+   Answer: "SECURE_NODE"
+2. Cipher: "IFMMP XPSME"
+   Answer: "HELLO WORLD"
+3. Cipher: "URYYB QUNER"
+   Answer: "HELLO THERE"
+4. Cipher: "DWWDFN DW GDZQ"
+   Answer: "ATTACK AT DAWN"
+5. Cipher: "EUXW VJCRB"
+   Answer: "VNIX SHELL"
+
+[LEVEL 2: STEGANOGRAPHY]
+(Hidden at the end of the image file)
+1. level2_1.png -> Answer: "GHOST_PROTOCOL"
+2. level2_2.png -> Answer: "BLUE_SKY"
+3. level2_3.png -> Answer: "DEEP_DIVE"
+4. level2_4.png -> Answer: "DARK_WEB"
+5. level2_5.png -> Answer: "CYBER_PUNK"
+
+[LEVEL 3: RSA ENCRYPTION]
+(Calculate Private Key 'd')
+1. p=61, q=53, e=17  -> Answer: "2753"
+2. p=47, q=59, e=17  -> Answer: "157"
+3. p=17, q=11, e=7   -> Answer: "23"
+4. p=23, q=29, e=3   -> Answer: "411"
+5. p=13, q=19, e=5   -> Answer: "173"
+
+[LEVEL 4: HASH VERIFICATION]
+(Find plaintext that matches SHA-256 hash)
+1. Hash: 5e884898... -> Answer: "password"
+2. Hash: 2cf24dba... -> Answer: "hello"
+3. Hash: 03ac6742... -> Answer: "1234"
+4. Hash: 8d969eef... -> Answer: "123456"
+5. Hash: 04f8996d... -> Answer: "admin"
+
+[LEVEL 5: DIGITAL SIGNATURE]
+1. Prompt: SIGNATURE_VERIFICATION_PENDING -> Answer: "TRUST_VERIFIED_2024"
+2. Prompt: AUTH_CHAIN_BROKEN              -> Answer: "ROOT_CA_APPROVED"
+3. Prompt: INVALID_CERTIFICATE            -> Answer: "CERT_RENEWED_VALID"
+4. Prompt: KEY_REVOKED                    -> Answer: "NEW_KEY_ISSUED"
+5. Prompt: ACCESS_TOKEN_EXPIRED           -> Answer: "TOKEN_REFRESHED"

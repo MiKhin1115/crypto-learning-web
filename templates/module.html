@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mission-panel">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+            <h2><span class="blink">></span> MODULE {{ module_id }}: {{ module.title }}</h2>
+            <p class="protocol-type">PROTOCOL: {{ module.type|upper }}</p>
+        </div>
+        <div style="text-align: right;">
+            <a href="{{ url_for('index') }}" style="color: var(--text-color); text-decoration: none;">[ RETURN TO DASHBOARD ]</a>
+        </div>
+    </div>
+
+    <hr style="border-color: #333; margin: 20px 0;">
+
+    <!-- SECTION 1: THEORY -->
+    <div class="theory-section">
+        <h3><span class="status-icon" style="font-size: 1.2rem;">📘</span> THEORETICAL BASIS</h3>
+        <p style="font-size: 1.1rem; line-height: 1.6;">{{ module.theory }}</p>
+    </div>
+
+    <!-- SECTION 2: TOOLING -->
+    <div class="tooling-section" style="margin-top: 30px;">
+        <h3><span class="status-icon" style="font-size: 1.2rem;">🛠️</span> REQUIRED TOOLING</h3>
+        <p>Use the following external tool to analyze the intercepted data:</p>
+        <a href="{{ module.external_tool_url }}" target="_blank" class="tool-btn">
+            [ LAUNCH {{ module.tool_name|upper }} ] <span style="font-size: 0.8rem;">↗</span>
+        </a>
+    </div>
+
+    <hr style="border-color: #333; margin: 30px 0;">
+
+    <!-- SECTION 3: THE MISSION -->
+    <div class="mission-section">
+        <h3><span class="status-icon" style="font-size: 1.2rem;">🎯</span> THE MISSION</h3>
+        <p>Analyze the data below using the tool and find the flag.</p>
+
+        <div class="challenge-content" style="margin: 20px 0; padding: 20px; background: #000; border: 1px solid #333;">
+            <h3>INTERCEPTED DATA:</h3>
+            
+            {% if module.type == 'caesar' %}
+                <div style="font-size: 1.5rem; letter-spacing: 5px; color: var(--warning-color); text-align: center; margin: 20px 0;">
+                    {{ module.mission_cipher }}
+                </div>
+                <p style="text-align: center; font-size: 0.8rem;">CIPHERTEXT DETECTED</p>
+
+            {% elif module.type == 'steganography' %}
+                <div style="text-align: center;">
+                    <img src="{{ url_for('static', filename='images/level2_1.png') }}" alt="Suspicious Image" style="max-width: 100%; border: 1px solid var(--accent-color);">
+                    <p style="margin-top: 10px;">
+                        <a href="{{ url_for('static', filename='images/level2_1.png') }}" download style="color: var(--text-color);">[ DOWNLOAD IMAGE ]</a>
+                    </p>
+                </div>
+
+            {% elif module.type == 'rsa' %}
+                <div class="rsa-panel" style="font-family: monospace;">
+                    <p>PUBLIC KEY PARAMETERS:</p>
+                    <ul>
+                        <li>p = {{ module.mission_cipher.p }}</li>
+                        <li>q = {{ module.mission_cipher.q }}</li>
+                        <li>e = {{ module.mission_cipher.e }}</li>
+                    </ul>
+                    <p style="color: var(--warning-color);">OBJECTIVE: CALCULATE PRIVATE KEY (d)</p>
+                </div>
+
+            {% elif module.type == 'hash' %}
+                <div style="word-break: break-all;">
+                    <p>TARGET HASH (SHA-256):</p>
+                    <code style="color: var(--warning-color);">{{ module.mission_cipher }}</code>
+                </div>
+
+            {% elif module.type == 'signature' %}
+                <div style="word-break: break-all;">
+                    <p>ENCODED SIGNATURE (BASE64):</p>
+                    <code style="color: var(--warning-color);">{{ module.mission_cipher }}</code>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="input-area">
+            <form id="moduleForm">
+                <label for="answer">ENTER DECRYPTED FLAG / ANSWER:</label>
+                <input type="text" id="answer" name="answer" placeholder="Type answer here..." autocomplete="off">
+                <button type="submit" id="submitBtn">VERIFY SOLUTION</button>
+            </form>
+            <div id="feedback" class="feedback"></div>
+        </div>
+
+        <div class="hints-section">
+             <button class="hint-btn" onclick="toggleHint()">[ SHOW HINT ]</button>
+             <div id="hint-display" class="hint">{{ module.hint }}</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .tool-btn {
+        display: inline-block;
+        background: transparent;
+        border: 1px solid var(--accent-color);
+        color: var(--accent-color);
+        padding: 15px 30px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s;
+        margin-top: 10px;
+    }
+    .tool-btn:hover {
+        background: var(--accent-color);
+        color: #000;
+        box-shadow: 0 0 15px var(--accent-color);
+    }
+</style>
+
+<script>
+    function toggleHint() {
+        const hintEl = document.getElementById('hint-display');
+        hintEl.classList.toggle('visible');
+    }
+
+    document.getElementById('moduleForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const answer = document.getElementById('answer').value;
+        const btn = document.getElementById('submitBtn');
+        const feedback = document.getElementById('feedback');
+        
+        btn.disabled = true;
+        btn.innerText = "VERIFYING...";
+        feedback.innerText = "RUNNING VERIFICATION...";
+        feedback.className = "feedback";
+
+        fetch("{{ url_for('module', module_id=module_id) }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: "answer=" + encodeURIComponent(answer)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                // SoundFX.playAccessGranted(); // Assuming main.js is still loaded
+                btn.innerText = "ACCESS GRANTED";
+                feedback.innerText = "ACCESS GRANTED. GOOD WORK.";
+                feedback.className = "feedback success";
+                
+                // Confetti or visual cue could go here
+                setTimeout(() => {
+                     btn.disabled = false;
+                     btn.innerText = "VERIFY SOLUTION";
+                }, 3000);
+            } else {
+                // SoundFX.playAccessDenied();
+                btn.disabled = false;
+                btn.innerText = "VERIFY SOLUTION";
+                feedback.innerText = "ACCESS DENIED. " + data.message;
+                feedback.className = "feedback error";
+                
+                document.querySelector('.input-area').animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-10px)' },
+                    { transform: 'translateX(10px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 300 });
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            btn.disabled = false;
+            btn.innerText = "VERIFY SOLUTION";
+            feedback.innerText = "SYSTEM ERROR.";
+        });
+    });
+</script>
+{% endblock %}

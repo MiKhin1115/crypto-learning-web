@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Escape Room | System Breach</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+    <div class="scanlines"></div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="icon">🔒</span> SYSTEM BREACH PROTOCOL
+            </div>
+            <div class="status-bar">
+                CONNECTION: <span class="blink">SECURE</span>
+            </div>
+        </header>
+
+        <main>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer>
+            <p>UNAUTHORIZED ACCESS IS A FELONY. PROCEED AT YOUR OWN RISK.</p>
+            <button id="muteBtn" class="mute-btn">[ SOUND: ON ]</button>
+        </footer>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
