@@ -8,54 +8,154 @@ app.config.from_object(Config)
 # Game State Constants
 MODULE_DATA = {
     1: {
-        "title": "Caesar Cipher",
-        "type": "caesar",
-        "theory": "The Caesar Cipher is one of the simplest and most widely known encryption techniques. It is a type of substitution cipher in which each letter in the plaintext is replaced by a letter some fixed number of positions down the alphabet.",
-        "tool_name": "Cryptii (Caesar Cipher)",
-        "external_tool_url": "https://cryptii.com/pipes/caesar-cipher",
-        "mission_cipher": "WKH SDVVZRUG LV VHFXUHBQRGH",
-        "correct_answer": "THE PASSWORD IS SECURE_NODE",
-        "hint": "Try a shift of -3 (or +23)."
+        "title": "Introduction to InfoSec",
+        "type": "infosec",
+        "theory": "Information Security relies on the CIA Triad: Confidentiality (keeping data secret), Integrity (ensuring data isn't tampered with), and Availability (ensuring access). Authentication verifies identity, while Non-repudiation prevents denial of actions.",
+        "tool_name": "CyberChef (Base64)",
+        "external_tool_url": "https://gchq.github.io/CyberChef/#recipe=From_Base64('A-Za-z0-9%2B/%3D',true,false)",
+        "mission_cipher": "Q09ORklERU5USUFMSVRZX0lOVEVHUklUWV9BVkFJTEFCSUxJVFk=",
+        "correct_answer": "CONFIDENTIALITY_INTEGRITY_AVAILABILITY",
+        "hint": "The flag is encoded in Base64. It represents the CIA triad components joined by underscores."
     },
     2: {
-        "title": "Steganography",
-        "type": "steganography",
-        "theory": "Steganography is the practice of concealing a file, message, image, or video within another file, message, image, or video. Unlike encryption, which hides the content of the message, steganography hides the existence of the message itself.",
-        "tool_name": "AperiSolve",
-        "external_tool_url": "https://www.aperisolve.com/",
-        "mission_cipher": "static/images/level2_1.png",
-        "correct_answer": "GHOST_PROTOCOL",
-        "hint": "Upload the image to the tool and check the 'Strings' or 'Steghide' output."
+        "title": "Math Foundations",
+        "type": "math",
+        "theory": "Cryptography relies on mathematical concepts like Bijections (one-to-one correspondence) and Trapdoor Functions (easy to compute one way, hard the other). Plaintext is the original message; Ciphertext is the scrambled result.",
+        "tool_name": "WolframAlpha",
+        "external_tool_url": "https://www.wolframalpha.com/",
+        "mission_cipher": "Find x if 3x + 7 = 4 (mod 26).",
+        "correct_answer": "25",
+        "hint": "Solve 3x + 7 ≡ 4 (mod 26). 3x ≡ -3 ≡ 23 (mod 26). Multiply by modular inverse of 3."
     },
     3: {
-        "title": "RSA Encryption",
-        "type": "rsa",
-        "theory": "RSA (Rivest–Shamir–Adleman) is a public-key cryptosystem. It uses a pair of keys: a public key for encryption and a private key for decryption. Its security relies on the practical difficulty of factoring the product of two large prime numbers.",
-        "tool_name": "dCode RSA Cipher",
-        "external_tool_url": "https://www.dcode.fr/rsa-cipher",
-        "mission_cipher": {"p": 61, "q": 53, "e": 17},
-        "correct_answer": "2753",
-        "hint": "Calculate the Private Key (d). You have p, q, and e. d is the modular multiplicative inverse of e modulo phi(n)."
+        "title": "Encryption Paradigms",
+        "type": "theory",
+        "theory": "Symmetric encryption uses the SAME key for encryption and decryption (fast, but key exchange is hard). Asymmetric uses a Public/Private key pair (slower, solves key exchange). Hybrid systems use Asymmetric to exchange a Symmetric key.",
+        "tool_name": "AES Encryption Tool",
+        "external_tool_url": "https://www.devglan.com/online-tools/aes-encryption-decryption",
+        "mission_cipher": "Alice encrypts with Bob's Public Key. Bob decrypts with his Private Key. What paradigm is this?",
+        "correct_answer": "ASYMMETRIC",
+        "hint": "Is it Symmetric, Asymmetric, or Hybrid?"
     },
     4: {
-        "title": "Hashing",
+        "title": "Advanced Math",
+        "type": "math",
+        "theory": "Complexity Theory classifies problems by difficulty (P vs NP). 'Work Factor' is the effort to break a system. Algebraic Structures like Groups, Rings, and Fields form the basis of many algorithms.",
+        "tool_name": "Big Number Calculator",
+        "external_tool_url": "https://www.calculator.net/big-number-calculator.html",
+        "mission_cipher": "Calculate 2^10 mod 11.",
+        "correct_answer": "1",
+        "hint": "Fermat's Little Theorem: a^(p-1) ≡ 1 (mod p) if p is prime."
+    },
+    5: {
+        "title": "Probability & Number Theory",
+        "type": "math",
+        "theory": "Entropy measures randomness/unpredictability. Modular Arithmetic (clock math) is central to crypto. The Greatest Common Divisor (GCD) is used in algorithms like RSA (Extended Euclidean Algorithm).",
+        "tool_name": "GCD Calculator",
+        "external_tool_url": "https://www.alcula.com/calculators/math/gcd/#gsc.tab=0",
+        "mission_cipher": "Calculate GCD(1071, 462)",
+        "correct_answer": "21",
+        "hint": "Use the Euclidean algorithm."
+    },
+    6: {
+        "title": "Number-Theoretic Problems",
+        "type": "math",
+        "theory": "Integer Factorization (breaking a composite number into primes) is the hardness assumption behind RSA. Discrete Logarithm is the basis for Diffie-Hellman and ElGamal.",
+        "tool_name": "FactorDB",
+        "external_tool_url": "http://factordb.com/",
+        "mission_cipher": "Factorize: 3233",
+        "correct_answer": "53, 61",
+        "hint": "The factors are two prime numbers. Input as 'small, large' (e.g., 3, 5)."
+    },
+    7: {
+        "title": "RSA & Quadratic Residuosity",
+        "type": "rsa",
+        "theory": "RSA security relies on the e-th root problem. Quadratic Residuosity involves determining if a number is a perfect square modulo n. These hard problems secure data against unauthorized decryption.",
+        "tool_name": "RSA Calculator",
+        "external_tool_url": "https://www.cs.drexel.edu/~popyack/Courses/CSP/Fa17/notes/10.1_Cryptography/RSAWorksheetv4e.html",
+        "mission_cipher": {"p": 61, "q": 53, "e": 17},
+        "correct_answer": "2753",
+        "hint": "d is the modular inverse of e mod (p-1)(q-1)."
+    },
+    8: {
+        "title": "Parameters & Primality",
+        "type": "math",
+        "theory": "Secure prime selection is critical. We use probabilistic tests like Fermat and Miller-Rabin to find 'industrial grade' primes quickly, as deterministic testing is too slow for large numbers.",
+        "tool_name": "Miller-Rabin Calculator",
+        "external_tool_url": "https://planetcalc.com/8995/",
+        "mission_cipher": "Is 7919 a prime number? (YES/NO)",
+        "correct_answer": "YES",
+        "hint": "It is the 1000th prime number."
+    },
+    9: {
+        "title": "Prime Generation & Stream Ciphers",
+        "type": "crypto",
+        "theory": "Stream ciphers encrypt data bit-by-bit using a pseudorandom keystream combined with plaintext (usually via XOR). High-bit-length primes are generated for keys.",
+        "tool_name": "CyberChef (XOR)",
+        "external_tool_url": "https://xor.pw/#",
+        "mission_cipher": "Plaintext 0x41 XOR Key 0x35",
+        "correct_answer": "74",
+        "hint": "Result in Hex. 41 ^ 35."
+    },
+    10: {
+        "title": "LFSRs",
+        "type": "crypto",
+        "theory": "Linear Feedback Shift Registers (LFSRs) are used to generate pseudo-random numbers for stream ciphers. They shift bits and use feedback taps to determine the next input bit.",
+        "tool_name": "LFSR Simulator",
+        "external_tool_url": "https://www.dcode.fr/linear-feedback-shift-register",
+        "mission_cipher": "3-bit LFSR (x^3 + x + 1). Start: 100. Next state?",
+        "correct_answer": "001",
+        "hint": "Shift right. New bit (MSB or LSB depending on convention, assume standard) comes from taps."
+    },
+    11: {
+        "title": "Block Ciphers",
+        "type": "crypto",
+        "theory": "Block ciphers operate on fixed-length groups of bits (blocks). Modes of operation like ECB (Electronic Codebook) and CBC (Cipher Block Chaining) determine how multiple blocks are handled.",
+        "tool_name": "AES Encryption",
+        "external_tool_url": "https://the-x.cn/en-US/cryptography/Aes.aspx",
+        "mission_cipher": "Does ECB hide data patterns in images? (YES/NO)",
+        "correct_answer": "NO",
+        "hint": "Think of the famous Linux Penguin image encrypted with ECB."
+    },
+    12: {
+        "title": "Classical Evolution",
+        "type": "caesar",
+        "theory": "Classical ciphers like Caesar (shift) and Vigenère (polyalphabetic) relied on security through obscurity. Frequency analysis broke them, leading to modern Public-Key cryptography.",
+        "tool_name": "Cryptii (Caesar)",
+        "external_tool_url": "https://cryptii.com/pipes/caesar-cipher",
+        "mission_cipher": "WKH SDVVZRUG LV VHFXUHBQRGH",
+        "correct_answer": "THE PASSWORD IS SECUREYNODE",
+        "hint": "Shift -3."
+    },
+    13: {
+        "title": "Core Public-Key Algorithms",
+        "type": "crypto",
+        "theory": "RSA, Rabin, and El Gamal are core public-key algorithms. RSA relies on factorization, El Gamal on Discrete Logarithms. They enable secure communication without pre-shared keys.",
+        "tool_name": "ElGamal Calculator",
+        "external_tool_url": "https://www.calculator.net/big-number-calculator.html",
+        "mission_cipher": "ElGamal: p=23, g=5, x=3. Find h = g^x mod p.",
+        "correct_answer": "10",
+        "hint": "Calculate 5^3 mod 23."
+    },
+    14: {
+        "title": "Hash Functions",
         "type": "hash",
-        "theory": "A cryptographic hash function is a mathematical algorithm that maps data of arbitrary size to a bit array of a fixed size (the hash value). It is a one-way function, meaning it is practically impossible to invert.",
+        "theory": "Hash functions (MDCs, MACs) provide one-way mapping and collision resistance. They ensure data integrity. Common algorithms: MD5 (broken), SHA-256 (secure).",
         "tool_name": "CrackStation",
         "external_tool_url": "https://crackstation.net/",
         "mission_cipher": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
         "correct_answer": "password",
-        "hint": "This is a SHA-256 hash of a very common password."
+        "hint": "SHA-256 of a common word."
     },
-    5: {
-        "title": "Encoded Signature",
-        "type": "signature",
-        "theory": "Base64 is a group of binary-to-text encoding schemes that represent binary data in an ASCII string format. It is commonly used to encode digital signatures and other binary data for transmission over text-based protocols.",
-        "tool_name": "Base64Decode",
-        "external_tool_url": "https://www.base64decode.org/",
-        "mission_cipher": "VFJVU1RfVkVSSUZJRURfMjAyNA==",
-        "correct_answer": "TRUST_VERIFIED_2024",
-        "hint": "Decode the Base64 string to reveal the verified status code."
+    15: {
+        "title": "Identification & Authentication",
+        "type": "auth",
+        "theory": "Authentication proves identity (passwords, biometrics). Dictionary attacks try common passwords. Challenge-Response protocols (like CHAP) prevent replay attacks.",
+        "tool_name": "Password Strength Checker",
+        "external_tool_url": "https://howsecureismypassword.net/",
+        "mission_cipher": "What attack tries every word in a predefined list?",
+        "correct_answer": "DICTIONARY ATTACK",
+        "hint": "Two words. First word is a book of words."
     }
 }
 

@@ -6,16 +6,20 @@
     <p>Select a training module to begin. All protocols are unlocked for study.</p>
 </div>
 
-<div class="level-grid">
+<div class="row">
     {% for id, module in modules.items() %}
-        <a href="{{ url_for('module', module_id=id) }}" class="level-card unlocked">
-            <span class="status-icon">🔓</span>
-            <h3>Module {{ id }}: {{ module.title }}</h3>
-            <p>{{ module.type|upper }} PROTOCOL</p>
-            <div style="margin-top: 10px; font-size: 0.8rem; color: #888;">
-                [ CLICK TO LAUNCH ]
-            </div>
-        </a>
+        <div class="col-md-4 mb-4">
+            <a href="{{ url_for('module', module_id=id) }}" class="card h-100 level-card unlocked text-decoration-none">
+                <div class="card-body">
+                    <span class="status-icon">🔓</span>
+                    <h5 class="card-title">Module {{ id }}: {{ module.title }}</h5>
+                    <p class="card-text">{{ module.type|upper }} PROTOCOL</p>
+                    <div class="mt-2 small" style="color: #888;">
+                        [ CLICK TO LAUNCH ]
+                    </div>
+                </div>
+            </a>
+        </div>
     {% endfor %}
 </div>
 {% endblock %}
