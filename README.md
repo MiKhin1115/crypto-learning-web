@@ -27,14 +27,6 @@ python app.py
 
 Open http://127.0.0.1:5000 in your browser.
 
-## Project Structure
-- /Users/sanyamin/Desktop/crypto-learning-web/app.py
-- /Users/sanyamin/Desktop/crypto-learning-web/templates/index.html
-- /Users/sanyamin/Desktop/crypto-learning-web/templates/module.html
-- /Users/sanyamin/Desktop/crypto-learning-web/static/css/style.css
-- /Users/sanyamin/Desktop/crypto-learning-web/static/js/main.js
-- /Users/sanyamin/Desktop/crypto-learning-web/ANSWERS.txt
-
 ## Modules Overview
 1. Introduction to InfoSec (CIA triad + Base64)
 2. Math Foundations (modular equation)
