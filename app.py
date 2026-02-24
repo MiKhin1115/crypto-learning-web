@@ -262,9 +262,15 @@ MODULE_DATA = {
 }
 
 
+# In app.py
 @app.route('/')
 def index():
-    return render_template('index.html', modules=MODULE_DATA)
+    # 1. Initialize session if it's the user's first time
+    if 'unlocked' not in session:
+        session['unlocked'] = [1]  # Only Module 1 is unlocked at the start
+
+    # 2. Pass the 'unlocked' list to the template
+    return render_template('index.html', modules=MODULE_DATA, unlocked=session['unlocked'])
 
 
 @app.route('/module/<int:module_id>', methods=['GET', 'POST'])
@@ -275,22 +281,27 @@ def module(module_id):
 
     if request.method == 'POST':
         user_input = request.form.get('answer', '').strip()
-
-        # Check answer
         is_correct = False
 
-        # Normalize comparison (case-insensitive for text)
         if str(user_input).upper() == str(module_data['correct_answer']).upper():
             is_correct = True
 
         if is_correct:
+            # 3. UNLOCK THE NEXT LEVEL
+            next_id = module_id + 1
+            if 'unlocked' in session:
+                # Use a set to avoid duplicates, then convert back to list
+                unlocked_list = set(session['unlocked'])
+                unlocked_list.add(next_id)
+                session['unlocked'] = list(unlocked_list)
+                session.modified = True  # IMPORTANT: Tells Flask the session changed
+
             flash("Access Granted. Integrity Verified.", "success")
             return jsonify({"status": "success", "message": "Access Granted"})
         else:
             return jsonify({"status": "fail", "message": "Integrity Check Failed."})
 
     return render_template('module.html', module=module_data, module_id=module_id)
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
